@@ -8,8 +8,8 @@
 
 Валидация данных:
 	\begin{itemize}
-		\item Поля title, description валидируются через CourseForm;
-		\item Поле image проверяется на формат (JPEG, PNG).
+		\item поля title, description валидируются через CourseForm;
+		\item поле image проверяется на формат (JPEG, PNG).
 	\end{itemize}
 	
 Связи:
@@ -31,7 +31,7 @@
 	
 Основные методы:
 	\begin{itemize}
-		\item str(): возвращает title.
+		\item str(): возвращает title;
 		\item getabsoluteurl(): возвращает URL курса;
 		\item save(): обрабатывает изображение.
 	\end{itemize}
@@ -186,18 +186,18 @@
 Связи:
 	\begin{itemize}
 		\item внешний ключ lesson на Lesson;
-		\item связан с Question, TestResult;
+		\item связан с Question, TestResult.
 	\end{itemize}
 	
 Безопасность:
 	\begin{itemize}
 		\item редактирование ограничено creator урока;
-		\item доступ для студентов: isactive=True;
+		\item доступ для студентов: isactive=True.
 	\end{itemize}
 	
 Уведомления:
 	\begin{itemize}
-		\item уведомления через Django messages (например, «Тест создан»);
+		\item уведомления через Django messages (например, «Тест создан»).
 	\end{itemize}
 	
 Основные методы:
@@ -541,8 +541,8 @@
 
 Валидация данных:
 	\begin{itemize}
-		\item Поле completed — булево, устанавливается через представления;
-		\item Поле completedat заполняется автоматически при completed=True.
+		\item поле completed — булево, устанавливается через представления;
+		\item поле completedat заполняется автоматически при completed=True.
 	\end{itemize}
 	
 Связи:
@@ -687,7 +687,7 @@
 Связи:
 	\begin{itemize}
 		\item внешний ключ user на User;
-		\item внешний ключ achievement на Achievement;
+		\item внешний ключ achievement на Achievement.
 	\end{itemize}
 	
 Безопасность:
@@ -849,56 +849,6 @@
 		self.assertEqual(self.test.lesson, self.lesson)
 	\end{lstlisting}
 	
-	\item Модель Question: проверка вопросов с разными типами (single, multiple, text).
-	\begin{lstlisting}[language=Python, caption=Модульный тест для Question, label=lst:question_test]
-		from django.test import TestCase
-		from learning.models import Test, Question, Lesson, Course
-		from django.contrib.auth import get_user_model
-		
-		User = get_user_model()
-		
-		class QuestionTestCases(TestCase):
-		def setUp(self):
-		self.teacher = User.objects.create_user(username='sonya1', password='vanya232323', is_teacher=True)
-		self.course = Course.objects.create(title='Массивы', description='Описание курса', creator=self.teacher)
-		self.lesson = Lesson.objects.create(title='Поиск индекса элемента в массиве', content='Содержимое урока', order=1, course=self.course)
-		self.test = Test.objects.create(title='Тест', passing_score=80, lesson=self.lesson, is_active=True)
-		self.question = Question.objects.create(
-		text='Что такое массив?',
-		question_type='single',
-		points=10,
-		test=self.test
-		)
-		
-		def test_question_creation(self):
-		self.assertEqual(self.question.text, 'Что такое массив?')
-		self.assertEqual(self.question.question_type, 'single')
-		self.assertEqual(self.question.test, self.test)
-	\end{lstlisting}
-	
-	\item Модель Answer: проверка вариантов ответов и индикатора правильности.
-	\begin{lstlisting}[language=Python, caption=Модульный тест для Answer, label=lst:answer_test]
-		from django.test import TestCase
-		from learning.models import Test, Question, Answer, Lesson, Course
-		from django.contrib.auth import get_user_model
-		
-		User = get_user_model()
-		
-		class AnswerTestCases(TestCase):
-		def setUp(self):
-		self.teacher = User.objects.create_user(username='sonya1', password='vanya232323', is_teacher=True)
-		self.course = Course.objects.create(title='Массивы', description='Описание курса', creator=self.teacher)
-		self.lesson = Lesson.objects.create(title='Что такое массивы', content='Содержимое урока', order=1, course=self.course)
-		self.test = Test.objects.create(title='Тест', passing_score=70, lesson=self.lesson)
-		self.question = Question.objects.create(text='Что такое индекс?', question_type='single', points=10, test=self.test)
-		self.answer = Answer.objects.create(text='Индекс', is_correct=False, question=self.question, order=1)
-		
-		def test_answer_creation(self):
-		self.assertEqual(self.answer.text, 'Индекс')
-		self.assertFalse(self.answer.is_correct)
-		self.assertEqual(self.answer.question, self.question)
-	\end{lstlisting}
-	
 	\item Модель TestResult: проверка сохранения результатов тестов.
 	\begin{lstlisting}[language=Python, caption=Модульный тест для TestResult, label=lst:testresult_test]
 		from django.test import TestCase
@@ -930,26 +880,6 @@
 		self.assertEqual(self.test_result.lesson, self.lesson)
 	\end{lstlisting}
 	
-	\item Модель Enrollment: проверка записи студента на курс.
-	\begin{lstlisting}[language=Python, caption=Модульный тест для Enrollment, label=lst:enrollment_test]
-		from django.test import TestCase
-		from learning.models import Enrollment, Course
-		from django.contrib.auth import get_user_model
-		
-		User = get_user_model()
-		
-		class EnrollmentTestCases(TestCase):
-		def setUp(self):
-		self.teacher = User.objects.create_user(username='sonya1', password='vanya232323', is_teacher=True)
-		self.student = User.objects.create_user(username='Ivan_Sedih', password='vanya232323', is_student=True)
-		self.course = Course.objects.create(title='Типы данных', description='Описание курса', creator=self.teacher)
-		self.enrollment = Enrollment.objects.create(student=self.student, course=self.course)
-		
-		def test_enrollment_creation(self):
-		self.assertEqual(self.enrollment.student, self.student)
-		self.assertEqual(self.enrollment.course, self.course)
-	\end{lstlisting}
-	
 	\item Модель StudentProgress: проверка отметки о завершении урока.
 	\begin{lstlisting}[language=Python, caption=Модульный тест для StudentProgress, label=lst:studentprogress_test]
 		from django.test import TestCase
@@ -976,24 +906,6 @@
 		self.assertTrue(self.progress.completed)
 		self.assertEqual(self.progress.student, self.student)
 		self.assertEqual(self.progress.lesson, self.lesson)
-	\end{lstlisting}
-	
-	\item Модель Achievement: проверка создания достижений.
-	\begin{lstlisting}[language=Python, caption=Модульный тест для Achievement, label=lst:achievement_test]
-		from django.test import TestCase
-		from learning.models import Achievement
-		
-		class AchievementTestCases(TestCase):
-		def setUp(self):
-		self.achievement = Achievement.objects.create(
-		title='Первый курс',
-		description='Завершён первый курс',
-		badge_image='badges/first_course.png'
-		)
-		
-		def test_achievement_creation(self):
-		self.assertEqual(self.achievement.title, 'Первый курс')
-		self.assertEqual(self.achievement.description, 'Завершён первый курс')
 	\end{lstlisting}
 	
 	\item Модель UserAchievement: проверка присвоения достижений пользователям.
@@ -1051,9 +963,9 @@
 
 Описание сценариев тестирования:
 
-	\begin{enumerate}
+
 	
-	\item Регистрация и авторизация пользователя.
+\subsubsection{Регистрация и авторизация пользователя}
 	
 Описание: пользователь должен иметь возможность зарегистрироваться в системе, выбрав роль (преподаватель или студент), и войти с использованием учетных данных (имя пользователя, пароль, email).
 	
@@ -1061,12 +973,12 @@
 	
 	\begin{figure}[ht]
 		\centering
-		\includegraphics[width=1\textwidth]{images/регистр} 
+		\includegraphics[width=0.9\textwidth]{images/регистр} 
 		\caption{Регистрация и авторизация пользователя}
 		\label{login:image}
 	\end{figure}
 	
-	\item Создание курса и запись студента
+\subsubsection{Создание курса и запись студента}
 	
 Описание: преподаватель должен иметь возможность создать новый курс, указав название, описание и изображение, а студент — записаться на существующий курс.
 	
@@ -1074,12 +986,12 @@
 	
 \begin{figure}[ht]
 		\centering
-		\includegraphics[width=1\textwidth]{images/запись} 
+		\includegraphics[width=0.9\textwidth]{images/запись} 
 		\caption{Создание курса и запись студента}
 		\label{enroll:image}
 \end{figure}
 	
-	\item Добавление урока
+\subsubsection{Добавление урока}
 	
 Описание: преподаватель должен иметь возможность добавить урок к курсу, используя CKEditor для редактирования контента (текст, видео, упражнения), с указанием порядка и статуса публикации.
 	
@@ -1087,12 +999,12 @@
 	
 	\begin{figure}[ht]
 		\centering
-		\includegraphics[width=1\textwidth]{images/урокдобавить} 
+		\includegraphics[width=0.9\textwidth]{images/урокдобавить} 
 		\caption{Добавление урока}
 		\label{urok:image}
 	\end{figure}
-	\newpage
-	\item Прохождение теста и просмотр результатов
+\newpage
+\subsubsection{Прохождение теста и просмотр результатов}
 	
 Описание: студент должен иметь возможность пройти тест, связанный с уроком, выбрав ответы или введя текст, и просмотреть результат после завершения.
 	
@@ -1100,12 +1012,12 @@
 	
 	\begin{figure}[ht]
 		\centering
-		\includegraphics[width=1\textwidth]{images/тестрез} 
+		\includegraphics[width=0.9\textwidth]{images/тестрез} 
 		\caption{Прохождение теста и результаты}
 		\label{test:image}
 	\end{figure}
 	
-	\item Присвоение достижения студенту
+\subsubsection{Присвоение достижения студенту}
 	
 Описание: система должна автоматически присваивать достижение студенту после выполнения определенного действия (например, завершения первого урока), а студент должен иметь возможность просмотреть полученные достижения в своем профиле.
 	
@@ -1113,12 +1025,12 @@
 	
 	\begin{figure}[ht]
 		\centering
-		\includegraphics[width=1\textwidth]{images/достижение} 
+		\includegraphics[width=0.9\textwidth]{images/достижение} 
 		\caption{Присвоение достижения студенту}
 		\label{achiv:image}
 	\end{figure}
 	
-	\item Редактирование курса
+\subsubsection{Редактирование курса}
 	
 Описание: преподаватель должен иметь возможность редактировать существующий курс, изменяя его название, описание, изображение или статус публикации.
 	
@@ -1126,12 +1038,12 @@
 	
 	\begin{figure}[ht]
 		\centering
-		\includegraphics[width=1\textwidth]{images/редактироватькурс} 
+		\includegraphics[width=0.9\textwidth]{images/редактироватькурс} 
 		\caption{Редактирование курса}
 		\label{editcourse:image}
 	\end{figure}
-\newpage	
-	\item Удаление курса
+	
+\subsubsection{Удаление курса}
 	
 Описание: преподаватель должен иметь возможность удалить курс, при этом связанные данные (уроки, тесты) удаляются каскадно.
 	
@@ -1139,12 +1051,12 @@
 	
 	\begin{figure}[ht]
 		\centering
-		\includegraphics[width=1\textwidth]{images/удалитькурс} 
+		\includegraphics[width=0.9\textwidth]{images/удалитькурс} 
 		\caption{Удаление курса}
 		\label{deletecourse:image}
 	\end{figure}
 	
-	\item Проверка доступа к уроку
+\subsubsection{Проверка доступа к уроку}
 	
 Описание: система должна ограничивать доступ студента к уроку, если предыдущий урок не завершен или тест не сдан.
 	
@@ -1152,12 +1064,12 @@
 	
 	\begin{figure}[ht]
 		\centering
-		\includegraphics[width=1\textwidth]{images/доступурок} 
+		\includegraphics[width=0.9\textwidth]{images/доступурок} 
 		\caption{Проверка доступа к уроку}
 		\label{access:image}
 	\end{figure}
 	
-	\item Просмотр прогресса студента
+\subsubsection{Просмотр прогресса студента}
 	
 Описание: студент должен иметь возможность просмотреть свой прогресс по курсу, включая завершенные уроки, результаты тестов и средний балл.
 	
@@ -1165,12 +1077,13 @@
 	
 	\begin{figure}[ht]
 		\centering
-		\includegraphics[width=1\textwidth]{images/прогресс} 
+		\includegraphics[width=0.9\textwidth]{images/прогресс} 
 		\caption{Просмотр прогресса студента}
 		\label{progress:image}
 	\end{figure}
-\newpage	
-	\item Управление вопросами и ответами теста
+	
+
+\subsubsection{Управление вопросами и ответами теста}
 	
 Описание: преподаватель должен иметь возможность добавить, редактировать и удалить вопросы и ответы теста, связанного с уроком.
 	
@@ -1178,12 +1091,10 @@
 	
 	\begin{figure}[ht]
 		\centering
-		\includegraphics[width=1\textwidth]{images/вопросы} 
+		\includegraphics[width=0.9\textwidth]{images/вопросы} 
 		\caption{Управление вопросами и ответами теста}
 		\label{questions:image}
 	\end{figure}
-	
-\end{enumerate}
 
 \begin{xltabular}{\textwidth}{|X|l|X|}
 	\caption{Результаты системного тестирования\label{tab:system_testing_results}}\\
@@ -1211,63 +1122,50 @@
 
 \subsection{Сборка компонентов системы}
 
-Веб-приложение построено по архитектуре MVC, реализованной в Django.
+Для сборки и запуска веб-приложения нужно выполнить следующие шаги:
 
-Компоненты:
 \begin{enumerate}
-		\item Модели: описаны выше, обеспечивают работу с данными через ORM.
-		\item Представления: функции с декораторами loginrequired, teacherrequired.
-		\item Шаблоны: используют Bootstrap, CKEditor, AOS.
-		\item Маршруты: определены в urls.py.
-\end{enumerate}
-		
-Настройка:
-\begin{itemize}
-		\item установка Python, Django, SQLite/PostgreSQL;
-		\item настройка CKEditor, AOS, Bootstrap;
-		\item локализация через django.utils.translation.
-\end{itemize}
-
-\begin{lstlisting}[language=Python, caption=Маршруты приложения, label=lst:urls]
-	from django.urls import path
-	from . import views
+	\item Установка окружения:
+	\begin{itemize}
+		\item установите Python 3.9+ и pip.
+		\item склонируйте репозиторий: git clone https://github.com/Seduk23/DiplomFinal.git;
+		\item перейдите в директорию проекта: cd DiplomFinal;
+		\item создайте и активируйте виртуальное окружение: python -m venv venv и venv\textbackslash Scripts\textbackslash activate (Windows) или source venv/bin/activate (Linux/macOS);
+		\item установите зависимости: pip install -r requirements.txt.
+	\end{itemize}
 	
-	urlpatterns = [
-	path('', views.home, name='home'),
-	path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
-	path('dashboard/student/', views.student_dashboard, name='student_dashboard'),
-	path('teacher/dashboard/', views.teacher_dashboard, name='teacher_dashboard'),
-	path('admin/dashboard/', views.admin_dashboard, name='admin_dashboard'),
-	path('signup/student/', views.StudentSignUpView.as_view(), name='student_signup'),
-	path('logout/', LogoutView.as_view(), name='logout'),
-	path('signup/teacher/', views.TeacherSignUpView.as_view(), name='teacher_signup'),
-	path('course/create/', views.CourseCreateView.as_view(), name='course_create'),
-	path('course/<int:pk>/edit/', views.CourseUpdateView.as_view(), name='course_edit'),
-	path('course/<int:course_id>/', views.course_detail, name='course_detail'),
-	path('course/<int:course_id>/enroll/', views.enroll_course, name='enroll_course'),
-	path('course/<int:course_id>/unenroll/', views.unenroll_course, name='unenroll_course'),
-	path('course/<int:course_id>/manage-lessons/', views.manage_lessons, name='manage_lessons'),
-	path('course/<int:course_id>/delete/', views.delete_course, name='delete_course'),
-	path('course/<int:course_id>/reorder-lessons/', views.reorder_lessons, name='reorder_lessons'),
-	path('lesson/<int:pk>/edit/', views.LessonUpdateView.as_view(), name='lesson_edit'),
-	path('lesson/<int:lesson_id>/', views.LessonDetailView.as_view(), name='lesson_detail'),
-	path('lesson/<int:lesson_id>/preview/', views.lesson_preview, name='lesson_preview'),
-	path('test/<int:test_id>/questions/', views.manage_test_questions, name='manage_test_questions'),
-	path('lesson/<int:lesson_id>/test/create/', views.create_test, name='create_test'),
-	path('test/<int:test_id>/questions/', views.manage_test_questions, name='manage_test_questions'),
-	path('test/<int:test_id>/add-question/', views.add_question, name='add_question'),
-	path('upload_image/', views.upload_image, name='upload_image'),
-	path('question/<int:pk>/edit/', views.QuestionUpdateView.as_view(), name='edit_question'),
-	path('question/<int:pk>/delete/', views.QuestionDeleteView.as_view(), name='delete_question'),
-	path('question/<int:question_id>/answer/add/', views.AnswerCreateView.as_view(), name='add_answer'),
-	path('answer/<int:pk>/edit/', views.AnswerUpdateView.as_view(), name='edit_answer'),
-	path('answer/<int:pk>/delete/', views.AnswerDeleteView.as_view(), name='delete_answer'),
-	path('lesson/<int:lesson_id>/test/result/', views.test_result, name='test_result'),
-	path('test/<int:test_id>/results/', views.manage_test_results, name='manage_test_results'),
-	path('lesson/<int:lesson_id>/test/results/', views.test_result, name='test_results'),
-	path('lesson/<int:lesson_id>/complete/', views.complete_lesson, name='complete_lesson'),
-	path('lesson/<int:lesson_id>/delete/', views.delete_lesson, name='delete_lesson'),
-	path('test/<int:test_id>/delete/', views.delete_test, name='delete_test'),
-	path('glossary/', views.glossary, name='glossary'),
-	]
-\end{lstlisting}
+	\item Настройка базы данных:
+	\begin{itemize}
+		\item используется SQLite по умолчанию. Для PostgreSQL настройте settings.py и установите psycopg2-binary;
+		\item выполните миграции: python manage.py makemigrations и python manage.py migrate.
+	\end{itemize}
+	
+	\item Настройка окружения:
+	\begin{itemize}
+		\item создайте файл .env с настройками: SECRETKEY=yoursecretkey, DEBUG=True.
+	\end{itemize}
+	
+	\item Подключение библиотек:
+	\begin{itemize}
+		\item CKEditor: установлен через pip install django-ckeditor;
+		\item AOS и Bootstrap: подключены через CDN в base.html.
+	\end{itemize}
+	
+	\item Настройка медиафайлов:
+	\begin{itemize}
+		\item в settings.py добавьте: MEDIAURL='/media/', MEDIAROOT=BASEDIR / 'media'.
+	\end{itemize}
+	
+	\item Локализация:
+	\begin{itemize}
+		\item настройте LANGUAGES и LOCALEPATHS в settings.py;
+		\item скомпилируйте переводы: python manage.py compilemessages.
+	\end{itemize}
+	
+	\item Запуск:
+	\begin{itemize}
+		\item соберите статические файлы: python manage.py collectstatic;
+		\item создайте суперпользователя: python manage.py createsuperuser;
+		\item запустите сервер: python manage.py runserver.
+	\end{itemize}
+\end{enumerate}
