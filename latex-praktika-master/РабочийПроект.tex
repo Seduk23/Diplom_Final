@@ -42,9 +42,10 @@
 		\item использует CKEditor для description.
 	\end{itemize}
 
+Описание полей класса Course приведено в табл. ~\ref {tab:course_attributes}
 
 \begin{xltabular}{\textwidth}{|l|l|l|X|}
-	\caption{Данные класса Course\label{tab:course_attributes}}\\
+	\caption{Поля класса Course\label{tab:course_attributes}}\\
 	\hline
 	Поле & Тип & Обязательное & Описание \\ \hline
 	\endfirsthead
@@ -59,6 +60,8 @@
 	isactive & Boolean & да & Статус публикации \\ \hline
 	creator & ForeignKey & да & Преподаватель (User) \\ \hline
 \end{xltabular}
+
+Описание методов класса Course приведено в табл. ~\ref {tab:course_methods}
 
 \begin{xltabular}{\textwidth}{|l|X|}
 	\caption{Методы класса Course\label{tab:course_methods}}\\
@@ -137,9 +140,10 @@
 		\item использует CKEditor для content.
 	\end{itemize}
 
+Описание полей класса Lesson приведено в табл. ~\ref {tab:lesson_attributes}
 
 \begin{xltabular}{\textwidth}{|l|l|l|X|}
-	\caption{Данные класса Lesson\label{tab:lesson_attributes}}\\
+	\caption{Поля класса Lesson\label{tab:lesson_attributes}}\\
 	\hline
 	Поле & Тип & Обязательное & Описание \\ \hline
 	\endfirsthead
@@ -157,6 +161,8 @@
 	expectedresult & Text & нет & Ожидаемый результат \\ \hline
 	course & ForeignKey & да & Курс (Course) \\ \hline
 \end{xltabular}
+
+Описание методов класса Lesson приведено в табл. ~\ref {tab:lesson_methods}
 
 \begin{xltabular}{\textwidth}{|l|X|}
 	\caption{Методы класса Lesson\label{tab:lesson_methods}}\\
@@ -212,9 +218,10 @@
 		\item используется в testform.html.
 	\end{itemize}
 
+Описание полей класса Test приведено в табл. ~\ref {tab:test_attributes}
 
 \begin{xltabular}{\textwidth}{|l|l|l|X|}
-	\caption{Данные класса Test\label{tab:test_attributes}}\\
+	\caption{Поля класса Test\label{tab:test_attributes}}\\
 	\hline
 	Поле & Тип & Обязательное & Описание \\ \hline
 	\endfirsthead
@@ -229,6 +236,8 @@
 	isactive & Boolean & да & Статус активности \\ \hline
 	lesson & ForeignKey & да & Урок (Lesson) \\ \hline
 \end{xltabular}
+
+Описание методов класса Test приведено в табл. ~\ref {tab:test_methods}
 
 \begin{xltabular}{\textwidth}{|l|X|}
 	\caption{Методы класса Test\label{tab:test_methods}}\\
@@ -286,9 +295,10 @@
 		\item используется в шаблоне questionform.html.
 	\end{itemize}
 
+Описание полей класса Question приведено в табл. ~\ref {tab:question_attributes}
 
 \begin{xltabular}{\textwidth}{|l|l|l|X|}
-	\caption{Данные класса Question\label{tab:question_attributes}}\\
+	\caption{Поля класса Question\label{tab:question_attributes}}\\
 	\hline
 	Поле & Тип & Обязательное & Описание \\ \hline
 	\endfirsthead
@@ -302,6 +312,8 @@
 	points & Integer & да & Баллы за ответ \\ \hline
 	test & ForeignKey & да & Тест (Test) \\ \hline
 \end{xltabular}
+
+Описание методов класса Question приведено в табл. ~\ref {tab:question_methods}
 
 \begin{xltabular}{\textwidth}{|l|X|}
 	\caption{Методы класса Question\label{tab:question_methods}}\\
@@ -358,9 +370,10 @@
 		\item используется в шаблоне answerform.html.
 	\end{itemize}
 
+Описание полей класса Answer приведено в табл. ~\ref {tab:answer_attributes}
 
 \begin{xltabular}{\textwidth}{|l|l|l|X|}
-	\caption{Данные класса Answer\label{tab:answer_attributes}}\\
+	\caption{Поля класса Answer\label{tab:answer_attributes}}\\
 	\hline
 	Поле & Тип & Обязательное & Описание \\ \hline
 	\endfirsthead
@@ -374,6 +387,8 @@
 	order & Integer & да & Порядок отображения \\ \hline
 	question & ForeignKey & да & Вопрос (Question) \\ \hline
 \end{xltabular}
+
+Описание методов класса Answer приведено в табл. ~\ref {tab:answer_methods}
 
 \begin{xltabular}{\textwidth}{|l|X|}
 	\caption{Методы класса Answer\label{tab:answer_methods}}\\
@@ -431,9 +446,10 @@
 		\item используется в шаблоне testresult.html.
 	\end{itemize}
 
+Описание полей класса TestResult приведено в табл. ~\ref {tab:testresult_attributes}
 
 \begin{xltabular}{\textwidth}{|l|l|l|X|}
-	\caption{Данные класса TestResult\label{tab:testresult_attributes}}\\
+	\caption{Поля класса TestResult\label{tab:testresult_attributes}}\\
 	\hline
 	Поле & Тип & Обязательное & Описание \\ \hline
 	\endfirsthead
@@ -449,6 +465,8 @@
 	attempts & Integer & да & Количество попыток \\ \hline
 	completedat & DateTime & да & Дата завершения \\ \hline
 \end{xltabular}
+
+Описание методов класса TestResult приведено в табл. ~\ref {tab:testresult_methods}
 
 \begin{xltabular}{\textwidth}{|l|X|}
 	\caption{Методы класса TestResult\label{tab:testresult_methods}}\\
@@ -504,9 +522,10 @@
 		\item используется в представлениях enrollcourse, unenrollcourse.
 	\end{itemize}
 
+Описание полей класса Enrollment приведено в табл. ~\ref {tab:enrollment_attributes}
 
 \begin{xltabular}{\textwidth}{|l|l|l|X|}
-	\caption{Данные класса Enrollment\label{tab:enrollment_attributes}}\\
+	\caption{Поля класса Enrollment\label{tab:enrollment_attributes}}\\
 	\hline
 	Поле & Тип & Обязательное & Описание \\ \hline
 	\endfirsthead
@@ -518,6 +537,8 @@
 	student & ForeignKey & да & Студент (User) \\ \hline
 	course & ForeignKey & да & Курс (Course) \\ \hline
 \end{xltabular}
+
+Описание методов класса Enrollment приведено в табл. ~\ref {tab:enrollment_methods}
 
 \begin{xltabular}{\textwidth}{|l|X|}
 	\caption{Методы класса Enrollment\label{tab:enrollment_methods}}\\
@@ -574,9 +595,10 @@
 		\item используется в представлениях completelesson, studentdashboard.
 	\end{itemize}
 
+Описание полей класса StudentProgress приведено в табл. ~\ref {tab:studentprogress_attributes}
 
 \begin{xltabular}{\textwidth}{|l|l|l|X|}
-	\caption{Данные класса StudentProgress\label{tab:studentprogress_attributes}}\\
+	\caption{Поля класса StudentProgress\label{tab:studentprogress_attributes}}\\
 	\hline
 	Поле & Тип & Обязательное & Описание \\ \hline
 	\endfirsthead
@@ -590,6 +612,8 @@
 	completed & Boolean & да & Завершённость урока \\ \hline
 	completedat & DateTime & нет & Дата завершения \\ \hline
 \end{xltabular}
+
+Описание методов класса StudentProgress приведено в табл. ~\ref {tab:studentprogress_methods}
 
 \begin{xltabular}{\textwidth}{|l|X|}
 	\caption{Методы класса StudentProgress\label{tab:studentprogress_methods}}\\
@@ -644,9 +668,10 @@
 		\item используется в studentdashboard.
 	\end{itemize}
 
+Описание полей класса Achievement приведено в табл. ~\ref {tab:achievement_attributes}
 
 \begin{xltabular}{\textwidth}{|l|l|l|X|}
-	\caption{Данные класса Achievement\label{tab:achievement_attributes}}\\
+	\caption{Поля класса Achievement\label{tab:achievement_attributes}}\\
 	\hline
 	Поле & Тип & Обязательное & Описание \\ \hline
 	\endfirsthead
@@ -658,6 +683,8 @@
 	title & String & да & Название достижения \\ \hline
 	description & Text & нет & Описание достижения \\ \hline
 \end{xltabular}
+
+Описание методов класса Achievement приведено в табл. ~\ref {tab:achievement_methods}
 
 \begin{xltabular}{\textwidth}{|l|X|}
 	\caption{Методы класса Achievement\label{tab:achievement_methods}}\\
@@ -713,9 +740,10 @@
 		\item используется в studentdashboard.
 	\end{itemize}
 
+Описание полей класса UserAchievement приведено в табл. ~\ref {tab:userachievement_attributes}
 
 \begin{xltabular}{\textwidth}{|l|l|l|X|}
-	\caption{Данные класса UserAchievement\label{tab:userachievement_attributes}}\\
+	\caption{Поля класса UserAchievement\label{tab:userachievement_attributes}}\\
 	\hline
 	Поле & Тип & Обязательное & Описание \\ \hline
 	\endfirsthead
@@ -728,6 +756,8 @@
 	achievement & ForeignKey & да & Достижение (Achievement) \\ \hline
 	awardedat & DateTime & да & Дата присвоения \\ \hline
 \end{xltabular}
+
+Описание методов класса UserAchievement приведено в табл. ~\ref {tab:userachievement_methods}
 
 \begin{xltabular}{\textwidth}{|l|X|}
 	\caption{Методы класса UserAchievement\label{tab:userachievement_methods}}\\
@@ -748,7 +778,7 @@
 
 Тестируемые компоненты:
 \begin{enumerate}
-	\item Модель User: проверка создания пользователей с ролями студента и преподавателя.
+	\item Модуль User: проверка создания пользователей с ролями студента и преподавателя.
 	\begin{lstlisting}[language=Python, caption=Модульный тест для User, label=lst:user_test]
 		from django.test import TestCase
 		from django.contrib.auth import get_user_model
@@ -773,7 +803,7 @@
 		self.assertTrue(self.student.is_student)
 	\end{lstlisting}
 	
-	\item Модель Course: проверка создания курса, валидации полей и связи с создателем.
+	\item Модуль Course: проверка создания курса, валидации полей и связи с создателем.
 	\begin{lstlisting}[language=Python, caption=Модульный тест для Course, label=lst:course_test]
 		from django.test import TestCase
 		from learning.models import Course
@@ -797,7 +827,7 @@
 		self.assertTrue(self.course.is_active)
 	\end{lstlisting}
 	
-	\item Модель Lesson: проверка добавления урока, порядка и связи с курсом.
+	\item Модуль Lesson: проверка добавления урока, порядка и связи с курсом.
 	\begin{lstlisting}[language=Python, caption=Модульный тест для Lesson, label=lst:lesson_test]
 		from django.test import TestCase
 		from learning.models import Course, Lesson
@@ -823,7 +853,7 @@
 		self.assertEqual(self.lesson.course, self.course)
 	\end{lstlisting}
 	
-	\item Модель Test: проверка создания тестов и связи с уроком.
+	\item Модуль Test: проверка создания тестов и связи с уроком.
 	\begin{lstlisting}[language=Python, caption=Модульный тест для Test, label=lst:test_test]
 		from django.test import TestCase
 		from learning.models import Test, Lesson, Course
@@ -849,7 +879,7 @@
 		self.assertEqual(self.test.lesson, self.lesson)
 	\end{lstlisting}
 	
-	\item Модель TestResult: проверка сохранения результатов тестов.
+	\item Модуль TestResult: проверка сохранения результатов тестов.
 	\begin{lstlisting}[language=Python, caption=Модульный тест для TestResult, label=lst:testresult_test]
 		from django.test import TestCase
 		from learning.models import TestResult, Test, Lesson, Course
@@ -880,7 +910,7 @@
 		self.assertEqual(self.test_result.lesson, self.lesson)
 	\end{lstlisting}
 	
-	\item Модель StudentProgress: проверка отметки о завершении урока.
+	\item Модуль StudentProgress: проверка отметки о завершении урока.
 	\begin{lstlisting}[language=Python, caption=Модульный тест для StudentProgress, label=lst:studentprogress_test]
 		from django.test import TestCase
 		from learning.models import StudentProgress, Lesson, Course
@@ -908,7 +938,7 @@
 		self.assertEqual(self.progress.lesson, self.lesson)
 	\end{lstlisting}
 	
-	\item Модель UserAchievement: проверка присвоения достижений пользователям.
+	\item Модуль UserAchievement: проверка присвоения достижений пользователям.
 	\begin{lstlisting}[language=Python, caption=Модульный тест для UserAchievement, label=lst:userachievement_test]
 		from django.test import TestCase
 		from learning.models import Achievement, UserAchievement
