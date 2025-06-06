@@ -774,198 +774,102 @@
 
 \subsection{Модульное тестирование классов и методов программы}
 
-Модульное тестирование проводилось для проверки корректности работы всех классов и методов обучающей платформы, разработанной на Django. Тестирование выполнялось с использованием фреймворка django.test, который позволяет создавать изолированные тестовые сценарии для моделей, представлений и форм.
+Модульное тестирование проводилось для проверки корректности работы классов и методов обучающей платформы, разработанной на Django, с использованием фреймворка django.test. Для каждого модуля созданы таблицы тестовых наборов.
 
-Тестируемые компоненты:
 \begin{enumerate}
 	\item Модуль User: проверка создания пользователей с ролями студента и преподавателя.
-	\begin{lstlisting}[language=Python, caption=Модульный тест для User, label=lst:user_test]
-		from django.test import TestCase
-		from django.contrib.auth import get_user_model
-		
-		User = get_user_model()
-		
-		class UserTestCases(TestCase):
-		def setUp(self):
-		self.teacher = User.objects.create_user(
-		username='sonya1',
-		password='vanya232323',
-		is_teacher=True
-		)
-		self.student = User.objects.create_user(
-		username='Ivan_Sedih',
-		password='vanya232323',
-		is_student=True
-		)
-		
-		def test_user_creation(self):
-		self.assertTrue(self.teacher.is_teacher)
-		self.assertTrue(self.student.is_student)
-	\end{lstlisting}
+	\begin{xltabular}{\textwidth}{|p{3cm}|p{6cm}|p{6cm}|}
+		\caption{Тестовые наборы для модуля User\label{tab:user_tests}}\\
+		\hline
+		Описание теста & Входные данные & Эталонные выходные данные \\ \hline
+		\endfirsthead
+		\continuecaption{Продолжение таблицы \ref{tab:user_tests}}\\
+		\hline
+		Описание теста & Входные данные & Эталонные выходные данные \\ \hline
+		\endhead
+		Создание преподавателя & username='sonya1', password='vanya232323', is\_teacher=True & Пользователь создан, поле is\_teacher имеет значение True \\ \hline
+		Создание студента & username='Ivan\_Sedih', password='vanya232323', is\_student=True & Пользователь создан, поле is\_student имеет значение True \\ \hline
+	\end{xltabular}
 	
 	\item Модуль Course: проверка создания курса, валидации полей и связи с создателем.
-	\begin{lstlisting}[language=Python, caption=Модульный тест для Course, label=lst:course_test]
-		from django.test import TestCase
-		from learning.models import Course
-		from django.contrib.auth import get_user_model
-		
-		User = get_user_model()
-		
-		class CourseTestCases(TestCase):
-		def setUp(self):
-		self.teacher = User.objects.create_user(username='sonya1', password='vanya232323', is_teacher=True)
-		self.course = Course.objects.create(
-		title='Основы JS',
-		description='Описание курса',
-		creator=self.teacher,
-		is_active=True
-		)
-		
-		def test_course_creation(self):
-		self.assertEqual(self.course.title, 'Основы JS')
-		self.assertEqual(self.course.creator, self.teacher)
-		self.assertTrue(self.course.is_active)
-	\end{lstlisting}
+	\begin{xltabular}{\textwidth}{|p{3cm}|p{6cm}|p{6cm}|}
+		\caption{Тестовые наборы для модуля Course\label{tab:course_tests}}\\
+		\hline
+		Описание теста & Входные данные & Эталонные выходные данные \\ \hline
+		\endfirsthead
+		\continuecaption{Продолжение таблицы \ref{tab:course_tests}}\\
+		\hline
+		Описание теста & Входные данные & Эталонные выходные данные \\ \hline
+		\endhead
+		Создание курса & title='Основы JS', description='Описание курса', creator=teacher\_obj, is\_active=True & Курс создан с указанным названием, активным статусом и привязкой к создателю \\ \hline
+	\end{xltabular}
 	
 	\item Модуль Lesson: проверка добавления урока, порядка и связи с курсом.
-	\begin{lstlisting}[language=Python, caption=Модульный тест для Lesson, label=lst:lesson_test]
-		from django.test import TestCase
-		from learning.models import Course, Lesson
-		from django.contrib.auth import get_user_model
-		
-		User = get_user_model()
-		
-		class LessonTestCases(TestCase):
-		def setUp(self):
-		self.teacher = User.objects.create_user(username='sonya1', password='vanya232323', is_teacher=True)
-		self.course = Course.objects.create(title='Массивы', description='Описание курса', creator=self.teacher)
-		self.lesson = Lesson.objects.create(
-		title='Что такое массивы',
-		content='Содержимое урока',
-		order=1,
-		course=self.course,
-		is_published=True
-		)
-		
-		def test_lesson_creation(self):
-		self.assertEqual(self.lesson.title, 'Что такое массивы')
-		self.assertEqual(self.lesson.order, 1)
-		self.assertEqual(self.lesson.course, self.course)
-	\end{lstlisting}
+	\begin{xltabular}{\textwidth}{|p{3cm}|p{6cm}|p{6cm}|}
+		\caption{Тестовые наборы для модуля Lesson\label{tab:lesson_tests}}\\
+		\hline
+		Описание теста & Входные данные & Эталонные выходные данные \\ \hline
+		\endfirsthead
+		\continuecaption{Продолжение таблицы \ref{tab:lesson_tests}}\\
+		\hline
+		Описание теста & Входные данные & Эталонные выходные данные \\ \hline
+		\endhead
+		Создание урока & title='Что такое массивы', content='Содержимое урока', order=1, course=course\_obj, is\_published=True & Урок создан с указанными параметрами, правильным порядком и привязкой к курсу \\ \hline
+	\end{xltabular}
 	
 	\item Модуль Test: проверка создания тестов и связи с уроком.
-	\begin{lstlisting}[language=Python, caption=Модульный тест для Test, label=lst:test_test]
-		from django.test import TestCase
-		from learning.models import Test, Lesson, Course
-		from django.contrib.auth import get_user_model
-		
-		User = get_user_model()
-		
-		class TestTestCases(TestCase):
-		def setUp(self):
-		self.teacher = User.objects.create_user(username='sonya1', password='vanya232323', is_teacher=True)
-		self.course = Course.objects.create(title='Массивы', description='Описание курса', creator=self.teacher)
-		self.lesson = Lesson.objects.create(title='Поиск индекса элемента в массиве', content='Содержимое урока', order=1, course=self.course)
-		self.test = Test.objects.create(
-		title='Тест',
-		passing_score=80,
-		lesson=self.lesson,
-		is_active=True
-		)
-		
-		def test_test_creation(self):
-		self.assertEqual(self.test.title, 'Тест')
-		self.assertEqual(self.test.passing_score, 80)
-		self.assertEqual(self.test.lesson, self.lesson)
-	\end{lstlisting}
+	\begin{xltabular}{\textwidth}{|p{3cm}|p{6cm}|p{6cm}|}
+		\caption{Тестовые наборы для модуля Test\label{tab:test_tests}}\\
+		\hline
+		Описание теста & Входные данные & Эталонные выходные данные \\ \hline
+		\endfirsthead
+		\continuecaption{Продолжение таблицы \ref{tab:test_tests}}\\
+		\hline
+		Описание теста & Входные данные & Эталонные выходные данные \\ \hline
+		\endhead
+		Создание теста & title='Тест', passing\_score=80, lesson=lesson\_obj, is\_active=True & Тест создан с указанным названием, проходным баллом и привязкой к уроку \\ \hline
+	\end{xltabular}
 	
-	\item Модуль TestResult: проверка сохранения результатов тестов.
-	\begin{lstlisting}[language=Python, caption=Модульный тест для TestResult, label=lst:testresult_test]
-		from django.test import TestCase
-		from learning.models import TestResult, Test, Lesson, Course
-		from django.contrib.auth import get_user_model
-		from django.utils import timezone
-		
-		User = get_user_model()
-		
-		class TestResultTestCases(TestCase):
-		def setUp(self):
-		self.teacher = User.objects.create_user(username='sonya1', password='vanya232323', is_teacher=True)
-		self.student = User.objects.create_user(username='Ivan_Sedih', password='vanya232323', is_student=True)
-		self.course = Course.objects.create(title='Объекты', description='Описание курса', creator=self.teacher)
-		self.lesson = Lesson.objects.create(title='Создание объектов', content='Содержимое урока', order=1, course=self.course)
-		self.test = Test.objects.create(title='Тест', passing_score=70, lesson=self.lesson)
-		self.test_result = TestResult.objects.create(
-		student=self.student,
-		lesson=self.lesson,
-		score=85,
-		answers='{"q1": "a1"}',
-		attempts=1,
-		completed_at=timezone.now()
-		)
-		
-		def test_testresult_creation(self):
-		self.assertEqual(self.test_result.score, 85)
-		self.assertEqual(self.test_result.student, self.student)
-		self.assertEqual(self.test_result.lesson, self.lesson)
-	\end{lstlisting}
+	\item \textbf{Модуль TestResult: проверка сохранения результатов тестов.}
+	\begin{xltabular}{\textwidth}{|p{3cm}|p{6cm}|p{6cm}|}
+		\caption{Тестовые наборы для модуля TestResult\label{tab:testresult_tests}}\\
+		\hline
+		Описание теста & Входные данные & Эталонные выходные данные \\ \hline
+		\endfirsthead
+		\continuecaption{Продолжение таблицы \ref{tab:testresult_tests}}\\
+		\hline
+		Описание теста & Входные данные & Эталонные выходные данные \\ \hline
+		\endhead
+		Сохранение результата & student=student\_obj, lesson=lesson\_obj, score=85, answers='\{"q1":"a1"\}', attempts=1 & Результат сохранен с указанным баллом, ответами и привязкой к студенту и уроку \\ \hline
+	\end{xltabular}
 	
 	\item Модуль StudentProgress: проверка отметки о завершении урока.
-	\begin{lstlisting}[language=Python, caption=Модульный тест для StudentProgress, label=lst:studentprogress_test]
-		from django.test import TestCase
-		from learning.models import StudentProgress, Lesson, Course
-		from django.contrib.auth import get_user_model
-		from django.utils import timezone
-		
-		User = get_user_model()
-		
-		class StudentProgressTestCases(TestCase):
-		def setUp(self):
-		self.teacher = User.objects.create_user(username='sonya1', password='vanya232323', is_teacher=True)
-		self.student = User.objects.create_user(username='Ivan_Sedih', password='vanya232323', is_student=True)
-		self.course = Course.objects.create(title='Типы данных', description='Описание курса', creator=self.teacher)
-		self.lesson = Lesson.objects.create(title='Переменные', content='Содержимое урока', order=1, course=self.course)
-		self.progress = StudentProgress.objects.create(
-		student=self.student,
-		lesson=self.lesson,
-		completed=True,
-		completed_at=timezone.now()
-		)
-		
-		def test_studentprogress_creation(self):
-		self.assertTrue(self.progress.completed)
-		self.assertEqual(self.progress.student, self.student)
-		self.assertEqual(self.progress.lesson, self.lesson)
-	\end{lstlisting}
+	\begin{xltabular}{\textwidth}{|p{3cm}|p{6cm}|p{6cm}|}
+		\caption{Тестовые наборы для модуля StudentProgress\label{tab:studentprogress_tests}}\\
+		\hline
+		Описание теста & Входные данные & Эталонные выходные данные \\ \hline
+		\endfirsthead
+		\continuecaption{Продолжение таблицы \ref{tab:studentprogress_tests}}\\
+		\hline
+		Описание теста & Входные данные & Эталонные выходные данные \\ \hline
+		\endhead
+		Отметка о прогрессе & student=student\_obj, lesson=lesson\_obj, completed=True & Прогресс зафиксирован с отметкой о завершении и правильными привязками \\ \hline
+	\end{xltabular}
 	
 	\item Модуль UserAchievement: проверка присвоения достижений пользователям.
-	\begin{lstlisting}[language=Python, caption=Модульный тест для UserAchievement, label=lst:userachievement_test]
-		from django.test import TestCase
-		from learning.models import Achievement, UserAchievement
-		from django.contrib.auth import get_user_model
-		from django.utils import timezone
-		
-		User = get_user_model()
-		
-		class UserAchievementTestCases(TestCase):
-		def setUp(self):
-		self.student = User.objects.create_user(username='Ivan_Sedih', password='vanya232323', is_student=True)
-		self.achievement = Achievement.objects.create(
-		title='Завершение теста',
-		description='Сдан первый тест',
-		badge_image='badges/test_completed.png'
-		)
-		self.user_achievement = UserAchievement.objects.create(
-		user=self.student,
-		achievement=self.achievement,
-		awarded_at=timezone.now()
-		)
-		
-		def test_userachievement_creation(self):
-		self.assertEqual(self.user_achievement.user, self.student)
-		self.assertEqual(self.user_achievement.achievement, self.achievement)
-	\end{lstlisting}
+	\begin{xltabular}{\textwidth}{|p{3cm}|p{6cm}|p{6cm}|}
+		\caption{Тестовые наборы для модуля UserAchievement\label{tab:userachievement_tests}}\\
+		\hline
+		Описание теста & Входные данные & Эталонные выходные данные \\ \hline
+		\endfirsthead
+		\continuecaption{Продолжение таблицы \ref{tab:userachievement_tests}}\\
+		\hline
+		Описание теста & Входные данные & Эталонные выходные данные \\ \hline
+		\endhead
+		Назначение достижения & user=student\_obj, achievement=achievement\_obj & Достижение успешно привязано к пользователю с указанными параметрами \\ \hline
+	\end{xltabular}
 \end{enumerate}
+
 
 Инструменты: django.test.TestCase, unittest.\\
 Результаты: все тесты выполнены успешно, ошибок не обнаружено.
